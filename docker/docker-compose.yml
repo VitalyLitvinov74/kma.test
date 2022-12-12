@@ -12,6 +12,23 @@ services:
       - '/var/run/docker.sock:/tmp/docker.sock:ro'
       - './proxy/certs:/etc/nginx/certs'
 
+  # Менеджер очередей
+  rabbit:
+    image: "rabbitmq:3.6.6-management"
+    hostname: "${BACKEND}"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    restart: always
+    ports:
+      - "${RABBITMQ_PORT}:15672"
+      - "5672:5672"
+#    volumes:
+#      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+      #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
+      #- "./autocluster-0.4.1.ez:/usr/lib/rabbitmq/lib/rabbitmq_server-3.5.5/plugins/autocluster-0.4.1.ez"
+
+
   # прокси для пхп
   php-proxy:
     image: nginx
