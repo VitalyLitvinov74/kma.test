@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "937466458ab3692da729d8e5f4d38991",
+    "content-hash": "558dd52bd5d4192c7a868089f5b73ddb",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -1158,6 +1158,54 @@
                 }
             ],
             "time": "2022-11-03T14:55:06+00:00"
+        },
+        {
+            "name": "vloop/entities",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/VitalyLitvinov74/vloop.entities.git",
+                "reference": "cff5f177ff2536789a6e75ac5025e2638b060be5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/VitalyLitvinov74/vloop.entities/zipball/cff5f177ff2536789a6e75ac5025e2638b060be5",
+                "reference": "cff5f177ff2536789a6e75ac5025e2638b060be5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "vloop\\entities\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaly Litvinov",
+                    "email": "support@tirrs.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Package",
+            "keywords": [
+                "Tasks",
+                "module",
+                "problems",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/VitalyLitvinov74/vloop.entities/issues",
+                "source": "https://github.com/VitalyLitvinov74/vloop.entities/tree/v1.0.4"
+            },
+            "time": "2022-01-31T21:47:16+00:00"
         },
         {
             "name": "yiisoft/yii2",

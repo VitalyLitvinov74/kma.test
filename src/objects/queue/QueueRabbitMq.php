@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\queue;
+namespace app\objects\queue;
 
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -24,7 +24,7 @@ class QueueRabbitMq
     public function __construct(string $exchangeName, string $queueName)
     {
         $this->connection = new AMQPStreamConnection(
-            'localhost',
+            'kma.test',
             5672,
             'rabbitmq',
             'rabbitmq'
