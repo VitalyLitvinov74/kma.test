@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace app\commands;
 
+use app\objects\exceptions\UrlNotResponding;
 use app\objects\forms\Field;
 use app\objects\queue\queueNames\KmaExchangeName;
 use app\objects\queue\queueNames\KmaQueueName;
@@ -12,6 +13,7 @@ use app\objects\urls\WebPage;
 use PhpAmqpLib\Message\AMQPMessage;
 use yii\console\Controller;
 use yii\helpers\ArrayHelper;
+use yii\httpclient\Exception;
 
 class QueueController extends Controller
 {
@@ -23,7 +25,7 @@ class QueueController extends Controller
         );
         $urlQueue->processMessages(function (AMQPMessage $message) {
            $url =
-//           new WebPageWithCheckedSource( //Страница с проверкой статуса ответа
+           new WebPageWithCheckedSource( //Страница с проверкой статуса ответа
                new WebPage( //Страница которую сохраняем в бд
                    new Field( //получаем урл в виде поля (я работаю с полями, это универсальная оболочка)
                        ArrayHelper::getValue(
@@ -31,10 +33,17 @@ class QueueController extends Controller
                            'url'
                        )
                    )
-               )
-//           )
+               ),
+               $message
+           )
             ;
-           $url->saveResponse();
+            try {
+                $url->saveResponse();
+            }catch (Exception $exception){
+                //ошибки можем залогировать. но на текущий момоент не обращаем на это внимания.
+            }catch (UrlNotResponding $exception){
+                // Если урл ничего не ответил, в этот момент отправлно сообщение в очередь
+            }
            $message->ack();
         });
     }

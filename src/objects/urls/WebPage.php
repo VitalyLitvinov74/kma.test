@@ -9,8 +9,10 @@ use app\objects\queue\queueNames\KmaQueueName;
 use app\objects\queue\QueueRabbitMq;
 use app\tables\TableUrlResponses;
 use Exception;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\httpclient\Client;
+use yii\httpclient\CurlTransport;
 
 class WebPage implements IWebPage
 {
@@ -28,41 +30,33 @@ class WebPage implements IWebPage
             new KmaExchangeName(),
             new KmaQueueName()
         );
-        $this->client = new Client();
+        $this->client = new Client([
+            'transport' => [
+                'class' => CurlTransport::class
+            ]
+        ]);
     }
 
-    public function sendToValidation(int $delaySec = 0): void
+    public function sendToValidation(): void
     {
-        $this->queue->putIn(
-            [
-                'url' => $this->urlField->toString()
-            ],
-            $delaySec
-        );
+        $this->queue->putIn([
+            'url' => $this->urlField->toString(),
+        ]);
     }
 
     public function saveResponse(): TableUrlResponses
     {
         $client = $this->client;
         $response = $client->createRequest()
-            ->setUrl(Url::to($this->urlField->toString(), true))
+            ->setUrl($this->urlField->toString())
             ->send();
         $record = new TableUrlResponses([
             'statusCode' => $response->getStatusCode(),
             'headers' => json_encode($response->getHeaders()->toArray()),
-            'content' => $response->getContent(),
+            'content' => Html::encode($response->getContent()),
             'url' => $this->urlField->toString()
         ]);
         $record->save();
         return $record;
-    }
-
-    /**
-     * вернет структуру объекта.
-     * @return IField
-     */
-    public function struct(): IField
-    {
-        return $this->urlField;
     }
 }

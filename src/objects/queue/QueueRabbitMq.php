@@ -43,6 +43,11 @@ class QueueRabbitMq
     public function putIn(array $data, int $delaySec = 0): void
     {
         $channel = $this->channel();
+//        $channel->basic_qos(
+//            null,
+//            1,
+//            null
+//        );
         $channel->basic_publish(
             new AMQPMessage(
                 json_encode($data),
@@ -67,12 +72,12 @@ class QueueRabbitMq
     public function processMessages(callable $needleMake): void
     {
         $channel = $this->channel();
-//        $channel->basic_qos(
-//            null,
-//            1,
-//            null
-//
-//        );
+        $channel->basic_qos(
+            null,
+            1,
+            null
+
+        );
 
         $channel->basic_consume(
             $this->queueName->toString(),
@@ -88,6 +93,7 @@ class QueueRabbitMq
             $channel->wait();
         }
         $channel->close();
+        $this->connection->close();
     }
 
     public function __destruct()
