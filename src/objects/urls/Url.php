@@ -8,8 +8,10 @@ use app\objects\forms\IField;
 use app\objects\queue\queueNames\KmaExchangeName;
 use app\objects\queue\queueNames\KmaQueueName;
 use app\objects\queue\QueueRabbitMq;
+use app\tables\TableUrlResponses;
 use Exception;
 use vloop\entities\contracts\Form;
+use yii\db\ActiveRecord;
 
 class Url implements IUrl
 {
@@ -28,10 +30,22 @@ class Url implements IUrl
         );
     }
 
-    public function sendToValidation(): void
+    public function sendToValidation(int $delaySec = 0): void
     {
-        $this->queue->putIn([
-            'url' => $this->urlField->toString()
-        ]);
+        $this->queue->putIn(
+            [
+                'url' => $this->urlField->toString()
+            ],
+            $delaySec
+        );
+    }
+
+    public function saveResponse(Form $pageData): TableUrlResponses
+    {
+        $fields = $pageData->validatedFields();
+        $record = new TableUrlResponses();
+        $record->load($fields, '');
+        $record->save();
+        return $record;
     }
 }

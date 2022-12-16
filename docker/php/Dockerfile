@@ -10,7 +10,10 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         libzip-dev \
         libxml2-dev \
-        curl
+        curl \
+        cron
+
+
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
 RUN apt-get -y install nodejs \
     git \

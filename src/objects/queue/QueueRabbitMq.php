@@ -67,15 +67,15 @@ class QueueRabbitMq
     public function processMessages(callable $needleMake): void
     {
         $channel = $this->channel();
-        $channel->basic_qos(
-            null,
-            1,
-            null
-
-        );
+//        $channel->basic_qos(
+//            null,
+//            1,
+//            null
+//
+//        );
 
         $channel->basic_consume(
-            $this->queueName,
+            $this->queueName->toString(),
             '',
             false,
             false,

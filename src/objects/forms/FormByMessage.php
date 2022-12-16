@@ -6,6 +6,7 @@ namespace app\objects\forms;
 use PhpAmqpLib\Message\AMQPMessage;
 use vloop\entities\contracts\Form;
 use vloop\entities\yii2\AbstractForm;
+use yii\helpers\VarDumper;
 
 class FormByMessage implements Form
 {
@@ -18,6 +19,6 @@ class FormByMessage implements Form
 
     public function validatedFields(): array
     {
-        return json_decode($this->message->getBody());
+        return json_decode($this->message->getBody(), true);
     }
 }
