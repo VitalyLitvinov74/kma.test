@@ -28,9 +28,10 @@ RUN docker-php-ext-install \
         mbstring \
         opcache \
         pdo_mysql \
-        sockets
+        sockets \
+        pcntl
 
-RUN pecl install xdebug \
+RUN pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug
 
 RUN curl -sS https://getcomposer.org/installer | \

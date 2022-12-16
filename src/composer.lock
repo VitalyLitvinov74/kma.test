@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "558dd52bd5d4192c7a868089f5b73ddb",
+    "content-hash": "a77a3b30f176f0447fea8a750dc2dd4e",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -29,16 +29,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:jquery/jquery-dist.git",
-                "reference": "3711efedf0ca2e998cd0417324f717f2e0b828ec"
+                "reference": "17f2a6864677d6dca5c1a2f05c02420ad899045b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/3711efedf0ca2e998cd0417324f717f2e0b828ec",
-                "reference": "3711efedf0ca2e998cd0417324f717f2e0b828ec"
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/17f2a6864677d6dca5c1a2f05c02420ad899045b",
+                "reference": "17f2a6864677d6dca5c1a2f05c02420ad899045b"
             },
             "type": "bower-asset",
             "license": [
@@ -1206,6 +1206,53 @@
                 "source": "https://github.com/VitalyLitvinov74/vloop.entities/tree/v1.0.4"
             },
             "time": "2022-01-31T21:47:16+00:00"
+        },
+        {
+            "name": "vyants/yii2-daemon",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vyants/yii2-daemon.git",
+                "reference": "8acc6cd3ae5ccec58cc589e10bd28198c3b5fe3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vyants/yii2-daemon/zipball/8acc6cd3ae5ccec58cc589e10bd28198c3b5fe3a",
+                "reference": "8acc6cd3ae5ccec58cc589e10bd28198c3b5fe3a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "vyants\\daemon\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Vladimir Yants",
+                    "email": "vladimir.yants@gmail.com"
+                }
+            ],
+            "description": "Extension provides functionality for simple daemons creation and control",
+            "keywords": [
+                "daemon",
+                "extension",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/vyants/yii2-daemon/issues",
+                "source": "https://github.com/vyants/yii2-daemon/tree/master"
+            },
+            "time": "2016-03-17T15:31:27+00:00"
         },
         {
             "name": "yiisoft/yii2",

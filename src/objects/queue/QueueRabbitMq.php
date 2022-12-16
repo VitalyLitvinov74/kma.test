@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace app\objects\queue;
 
+use app\objects\forms\IField;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -12,16 +13,16 @@ class QueueRabbitMq
 {
     private $queueName;
 
-    private $exchangeName;
+    private $exchangeName; //not used
 
     private $connection;
 
     /**
-     * @throws \AMQPQueueException
-     * @throws \AMQPExchangeException
-     * @throws \AMQPConnectionException
+     * @param IField $exchangeName
+     * @param IField $queueName
+     * @throws \Exception
      */
-    public function __construct(string $exchangeName, string $queueName)
+    public function __construct(IField $exchangeName, IField $queueName)
     {
         $this->connection = new AMQPStreamConnection(
             'kma.test',
@@ -53,7 +54,7 @@ class QueueRabbitMq
                 ]
             ),
             '',
-            $this->queueName
+            $this->queueName->toString()
         );
         $channel->close();
     }
@@ -63,24 +64,24 @@ class QueueRabbitMq
      * @param callable $needleMake - функиця обратного вызова, в которую передается сообщение из очереди
      * @return void
      */
-    public function pickUpTo(callable $needleMake): void
+    public function pickUpMessage(callable $needleMake): void
     {
         $channel = $this->channel();
         $channel->basic_qos(
-            null,     #размер предварительной выборки - размер окна предварительнйо выборки в октетах, null означает “без определённого ограничения”
-            1,      #количество предварительных выборок - окна предварительных выборок в рамках целого сообщения
-            null    #глобальный - global=null означает, что настройки QoS должны применяться для получателей, global=true означает, что настройки QoS должны применяться к каналу
+            null,
+            1,
+            null
 
         );
 
         $channel->basic_consume(
-            'invoice_queue',
+            $this->queueName,
             '',
             false,
             false,
             false,
             false,
-            array($this, 'process')
+            $needleMake //функция обратного вызова, для обработки сообщения
         );
 
         while (count($channel->callbacks)) {
@@ -98,7 +99,7 @@ class QueueRabbitMq
     {
         $channel = $this->connection->channel();
         $channel->queue_declare(
-            $this->queueName,
+            $this->queueName->toString(),
             false,
             true,
             false,
