@@ -64,7 +64,7 @@ class QueueRabbitMq
      * @param callable $needleMake - функиця обратного вызова, в которую передается сообщение из очереди
      * @return void
      */
-    public function pickUpMessage(callable $needleMake): void
+    public function processMessages(callable $needleMake): void
     {
         $channel = $this->channel();
         $channel->basic_qos(
