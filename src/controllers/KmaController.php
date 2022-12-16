@@ -5,13 +5,13 @@ namespace app\controllers;
 
 use app\objects\forms\FieldByForm;
 use app\objects\forms\UrlForm;
-use app\objects\urls\Url;
+use app\objects\urls\WebPage;
 use yii\rest\Controller;
 
 class KmaController extends Controller
 {
     public function actionAddUrl(){
-        $url = new Url(
+        $url = new WebPage(
             new FieldByForm(
                 new UrlForm(),
                 'url'

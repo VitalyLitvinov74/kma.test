@@ -14,9 +14,10 @@ class m221212_132029_startProject extends Migration
     {
         $this->createTable('url_responses', [
             'id' => $this->primaryKey(),
-            'statusCode'=>$this->integer(),
-            'headers'=>$this->string(),
-            'content'=>$this->string()
+            'statusCode' => $this->integer(),
+            'headers' => $this->text(),
+            'content' => $this->text(),
+            'url' => $this->string()
         ]);
     }
 
