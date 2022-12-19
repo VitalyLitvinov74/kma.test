@@ -11,6 +11,7 @@ use app\tables\TableUrlResponses;
 use Exception;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\VarDumper;
 use yii\httpclient\Client;
 use yii\httpclient\CurlTransport;
 
@@ -51,12 +52,27 @@ class WebPage implements IWebPage
             ->setUrl($this->urlField->toString())
             ->send();
         $record = new TableUrlResponses([
-            'statusCode' => $response->getStatusCode(),
-            'headers' => json_encode($response->getHeaders()->toArray()),
-            'content' => Html::encode($response->getContent()),
-            'url' => $this->urlField->toString()
-        ]);
+                'statusCode' => $response->getStatusCode(),
+                'headers' => $this->mappedHeaders(
+                    $response->getHeaders()->toArray()
+                ),
+                'content' => Html::encode($response->getContent()),
+                'url' => $this->urlField->toString()
+            ]);
+        VarDumper::dump($record);
         $record->save();
         return $record;
+    }
+
+    private function mappedHeaders(array $responseHeaders)
+    {
+        $array = [];
+        foreach ($responseHeaders as $headerName => $headerValue){
+            $array[] = [
+                'name'=>$headerName,
+                'value'=>$headerValue[0]
+            ];
+        }
+        return $array;
     }
 }

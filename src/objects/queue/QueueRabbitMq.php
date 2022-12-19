@@ -76,7 +76,6 @@ class QueueRabbitMq
             null,
             1,
             null
-
         );
 
         $channel->basic_consume(
